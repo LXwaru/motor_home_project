@@ -17,7 +17,7 @@ class ModelVehicleAdmin(admin.ModelAdmin):
 
 @admin.register(MotorHome)
 class MotorHomeAdmin(admin.ModelAdmin):
-    list_display = ('vin', 'year', 'model', 'color', 'price', 'is_new', 'for_sale', 'is_sold', 'sold_date')
+    list_display = ('vin', 'year', 'model', 'color', 'ticket_price', 'is_new', 'for_sale', 'is_sold', 'sold_date')
     list_filter = ('year', 'model', 'color', 'is_new', 'for_sale', 'is_sold')
     search_fields = ('vin', 'model__name', 'color')
 
