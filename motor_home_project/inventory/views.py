@@ -52,8 +52,6 @@ def post_inventory(request):
             return JsonResponse({'message': 'Created successfully'}, status=201)
         except Exception as e:
             return JsonResponse({'message': str(e)}, status=400)
-        except KeyError as e:
-            return JsonResponse({'message': f'Missing required field: {str(e)}'}, status=400)
 
 @require_http_methods(['GET'])
 def get_motor_home_details(request, id):
@@ -100,3 +98,6 @@ def delete_motor_home(request, id):
             return JsonResponse({'message': 'Deleted successfully'}, status=200)
         except Exception as e:
             return JsonResponse({'message': str(e)}, status=400)
+
+def home(request):
+    return render(request, 'inventory/dashboard.html')

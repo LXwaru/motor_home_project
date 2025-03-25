@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import get_inventory, get_motor_home_details, post_inventory, update_motor_home, delete_motor_home
+from .views import get_inventory, get_motor_home_details, post_inventory, update_motor_home, delete_motor_home, home
 
 app_name = 'inventory'
 
