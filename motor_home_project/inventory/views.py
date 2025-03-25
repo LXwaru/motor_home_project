@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import MotorHome, Model
 from django.views.decorators.http import require_http_methods
 from django.middleware.csrf import get_token
@@ -6,33 +6,19 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
 import json
 from django.shortcuts import get_object_or_404
+from .forms import MotorHomeForm
 
 
 @require_http_methods(['GET'])
 def get_inventory(request):
     if request.method == 'GET':
         csrf_token = get_token(request)
-        motor_homes = MotorHome.objects.all()
-        motor_homes_list = list(motor_homes.values(
-            'id', 
-            'vin', 
-            'year', 
-            'mileage', 
-            'condition',
-            'model_id',
-            'color',
-            'ticket_price', 
-            'image',
-            'is_new',
-            'for_sale',
-            'is_sold',
-            'sold_date'
-        ))
+        motor_homes = MotorHome.objects.select_related('model_id', 'model_id__make_id').all()
         context = {
-            'motor_homes': motor_homes_list
+            'motor_homes': motor_homes
         }
         
-        return JsonResponse(context)
+        return render(request, 'inventory/list.html', context)
 
 @ensure_csrf_cookie
 @require_http_methods(['POST'])
@@ -57,34 +43,35 @@ def post_inventory(request):
 def get_motor_home_details(request, id):
     if request.method == 'GET':
         motor_home = get_object_or_404(MotorHome, id=id)
-        motor_home_details = {
-            'id': motor_home.id,
-            'vin': motor_home.vin,
-            'year': motor_home.year,
-            'mileage': motor_home.mileage,
-            'condition': motor_home.condition,
-            'model_id': motor_home.model_id.id,
-            'color': motor_home.color,
-            'ticket_price': motor_home.ticket_price,
-            'image': motor_home.image.url if motor_home.image else None,
+        context = {
+            'motor_home': motor_home
         }
-        return JsonResponse(motor_home_details)
+        return render(request, 'inventory/detail.html', context)
     return JsonResponse({'message': 'Invalid request method'}, status=405)
 
 @ensure_csrf_cookie
-@require_http_methods(['PUT'])
+@require_http_methods(['GET', 'POST'])
 def update_motor_home(request, id):
-    if request.method == 'PUT':
-        try:
-            content = json.loads(request.body)
-            motor_home = get_object_or_404(MotorHome, id=id)
-            for field, value in content.items():
-                setattr(motor_home, field, value)
-            motor_home.save()
-            return JsonResponse({'message': 'Updated successfully'}, status=200)
-        except Exception as e:
-            return JsonResponse({'message': str(e)}, status=400)
-
+    if request.method == 'GET':
+        motor_home = get_object_or_404(MotorHome, id=id)
+        form = MotorHomeForm(instance=motor_home)
+        context = {
+            'motor_home': motor_home,
+            'form': form
+        }
+        return render(request, 'inventory/update.html', context)
+    elif request.method == 'POST':
+        motor_home = get_object_or_404(MotorHome, id=id)
+        form = MotorHomeForm(request.POST, request.FILES, instance=motor_home)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory:get_motor_home_details', id=motor_home.id)
+        else:
+            context = {
+                'motor_home': motor_home,
+                'form': form
+            }
+            return render(request, 'inventory/update.html', context)
 
 @ensure_csrf_cookie
 @require_http_methods(['DELETE'])

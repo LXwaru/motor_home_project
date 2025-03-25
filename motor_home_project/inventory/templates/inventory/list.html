@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h1>Motor Home Inventory List</h1>
+    <div>
+        <div>
+            <div>
+                <div> 
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Make</th>
+                                <th>Model</th>
+                                <th>Year</th>
+                                <th>Price</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for motor_home in motor_homes %}
+                                <tr>
+                                    <td>{{ motor_home.id }}</td>
+                                    <td>{{ motor_home.model_id.make_id.name }}</td>
+                                    <td>{{ motor_home.model_id.name }}</td>
+                                    <td>{{ motor_home.year }}</td>
+                                    <td>${{ motor_home.ticket_price }}</td>
+                                    <td>
+                                        <a href="{% url 'inventory:get_motor_home_details' motor_home.id %}">View Details</a> 
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

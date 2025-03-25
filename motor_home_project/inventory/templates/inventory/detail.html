@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th><h1>{{ motor_home.year }} - {{ motor_home.model_id.make_id.name }} {{ motor_home.model_id.name }}</h1></th>
+            </tr>
+            <tr>
+                <th><a href='{% url "inventory:motor_home_update_form" motor_home.id %}'>Edit</a> - <a href='{% url "inventory:delete_motor_home" motor_home.id %}'>Delete</a></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>ID: {{ motor_home.id }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <img src="/media/{{ motor_home.image }}" alt="Motor Home Image" style="width: 50%; height: auto;">
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mileage</th>
+                    <th>Condition</th>
+                    <th>Color</th>
+                    <th>Ticket Price</th>
+                    <th>Image</th>
+                    <th>Is New</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ motor_home.mileage }}</td>
+                    <td>{{ motor_home.condition }}</td>
+                    <td>{{ motor_home.color }}</td>
+                    <td>${{ motor_home.ticket_price }}</td>
+                    <td>
+
+                    </td>
+                    <td>{{ motor_home.is_new }}</td>
+                </tr>
+            </tbody>    
+        </table>
+    </div>
+</div>
+{% endblock %}

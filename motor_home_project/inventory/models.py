@@ -26,7 +26,7 @@ class MotorHome(models.Model):
     model_id = models.ForeignKey(Model, on_delete=models.CASCADE)
     color = models.CharField(max_length=100)
     ticket_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=None)
-    image = models.ImageField(upload_to='motor_homes/', null=True, blank=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
     is_new = models.BooleanField(default=True)
     for_sale = models.BooleanField(default=True)
     is_sold = models.BooleanField(default=False)
