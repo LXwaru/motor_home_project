@@ -9,10 +9,10 @@ class Make(models.Model):
     def __str__(self):
         return self.name
     
-class ModelVehicle(models.Model):
+class Model(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    make = models.ForeignKey(Make, on_delete=models.CASCADE)
+    make_id = models.ForeignKey(Make, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.name
@@ -23,7 +23,7 @@ class MotorHome(models.Model):
     year = models.IntegerField()
     mileage = models.IntegerField(null=True, blank=True, default=None)
     condition = models.CharField(max_length=100, null=True, blank=True, default=None)
-    model = models.ForeignKey(ModelVehicle, on_delete=models.CASCADE)
+    model_id = models.ForeignKey(Model, on_delete=models.CASCADE)
     color = models.CharField(max_length=100)
     ticket_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=None)
     image = models.ImageField(upload_to='motor_homes/', null=True, blank=True)
