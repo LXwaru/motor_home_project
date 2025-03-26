@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Update Motor Home</h1>
-<form method="post" action="{% url 'inventory:update_motor_home' motor_home.id %}">
+<form method="post" enctype="multipart/form-data" action="{% url 'inventory:update_motor_home' motor_home.id %}">
     {% csrf_token %}
     {{ form.as_p }}
         

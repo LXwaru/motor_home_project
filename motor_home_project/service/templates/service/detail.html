@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Service Ticket</h1>
+    <p>{{ motor_home.year }} - {{ motor_home.model_id.make_id.name }} {{ motor_home.model_id.name }}, {{ motor_home.color }}</p>
+    <p>Service Date: {{ service_ticket.service_date }}</p>
+    <p>Service Description: {{ service_ticket.service_description }}</p>
+    <p>Service Price: {{ service_ticket.service_price }}</p>
+    <p>Is Completed: {{ service_ticket.is_completed }}</p>
+    <p>Is Paid: {{ service_ticket.is_paid }}</p>
+    <p>Is Warranty: {{ service_ticket.is_warranty }}</p>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}
+

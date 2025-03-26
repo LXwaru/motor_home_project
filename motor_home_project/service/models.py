@@ -15,7 +15,8 @@ class ServiceTicket(models.Model):
     id = models.AutoField(primary_key=True)
     motor_home = models.ForeignKey(MotorHome, on_delete=models.CASCADE)
     service_person = models.ForeignKey(ServicePerson, on_delete=models.CASCADE)
-    service_date = models.DateField()
+    service_start_date = models.DateField()
+    service_end_date = models.DateField(null=True, blank=True, default=None)
     service_description = models.TextField()
     service_price = models.DecimalField(max_digits=10, decimal_places=2)
     is_completed = models.BooleanField(default=False)
@@ -23,8 +24,6 @@ class ServiceTicket(models.Model):
     is_warranty = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.motor_home.year} {self.motor_home.model.name} {self.motor_home.color} - {self.service_date}"
-    
-
+        return f"{self.motor_home.year} - {self.motor_home.model_id.make_id.name} {self.motor_home.model_id.name}, {self.motor_home.color}"
     
     

@@ -15,7 +15,10 @@ class Model(models.Model):
     make_id = models.ForeignKey(Make, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.name
+        return f"{self.make_id.name} - {self.name}"
+    
+    class Meta:
+        ordering = ['make_id__name', 'name']
 
 class MotorHome(models.Model):
     id = models.AutoField(primary_key=True)
@@ -29,10 +32,12 @@ class MotorHome(models.Model):
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     is_new = models.BooleanField(default=True)
     for_sale = models.BooleanField(default=True)
+    for_service = models.BooleanField(default=False)
+    for_rental = models.BooleanField(default=False)
     is_sold = models.BooleanField(default=False)
     sold_date = models.DateField(blank=True, null=True, default=None)
     
     def __str__(self):
-        return f"{self.year} {self.model.make.name} {self.model.name} - {self.color}"
+        return f"{self.year} {self.model_id.make_id.name} {self.model_id.name} - {self.color}"
     
     

@@ -12,6 +12,6 @@ class ServicePersonAdmin(admin.ModelAdmin):
 
 @admin.register(ServiceTicket)
 class ServiceTicketAdmin(admin.ModelAdmin):
-    list_display = ('motor_home', 'service_person', 'service_date', 'service_description', 'service_price', 'is_completed', 'is_paid', 'is_warranty')
-    search_fields = ('motor_home', 'service_person', 'service_date', 'service_description', 'service_price', 'is_completed', 'is_paid', 'is_warranty')
-    list_filter = ('motor_home', 'service_person', 'service_date', 'service_description', 'service_price', 'is_completed', 'is_paid', 'is_warranty')
+    list_display = ('motor_home', 'service_person', 'service_start_date', 'service_end_date', 'service_description', 'service_price', 'is_completed', 'is_paid', 'is_warranty')
+    search_fields = ('motor_home', 'service_person', 'service_start_date', 'service_end_date', 'service_description', 'service_price', 'is_completed', 'is_paid', 'is_warranty')
+    list_filter = ('motor_home', 'service_person', 'service_start_date', 'service_end_date', 'service_description', 'service_price', 'is_completed', 'is_paid', 'is_warranty')

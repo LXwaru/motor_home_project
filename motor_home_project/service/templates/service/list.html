@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Service List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>VIN</th>
+                <th>Year</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Color</th>
+                <th>Create Service Ticket</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for motor_home in motor_homes %}
+                <tr>
+                    <td>{{ motor_home.vin }}</td>
+                    <td>{{ motor_home.year }}</td>
+                    <td>{{ motor_home.model_id.make_id.name }}</td>
+                    <td>{{ motor_home.model_id.name }}</td>
+                    <td>{{ motor_home.color }}</td>
+                    <td>
+                        <a href="{% url 'service:create_service_ticket' motor_home.id %}">Create Service Ticket</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

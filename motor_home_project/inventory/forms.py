@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm
 from .models import MotorHome, Make, Model
 
@@ -7,20 +8,26 @@ class MotorHomeForm(ModelForm):
         fields = '__all__'
 
 class CreateMotorHomeForm(ModelForm):
+    model_id = forms.ModelChoiceField(
+        queryset=Model.objects.all(),
+        label="Make - Model"
+    )
     class Meta:
         model = MotorHome
-        fields = {
+        fields = [
             'vin',
+            'model_id',
             'year',
+            'color',
             'mileage',
             'condition',
-            'model_id',
-            'color',
             'ticket_price',
             'image',
             'is_new',
             'for_sale',
-        }
+            'for_service',
+            'for_rental',
+        ]
 
 class AddMakeForm(ModelForm):
     class Meta:
