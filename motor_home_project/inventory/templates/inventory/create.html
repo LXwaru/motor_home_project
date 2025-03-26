@@ -1,7 +1,13 @@
-html:5
-
 {% extends 'base.html' %}
 
 {% block content %}
 <h1>Add New Motor Home</h1>
 <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Motor Home</button>
+</form>
+<a href="{% url 'inventory:add_make' %}">Add Make</a><br />
+<a href="{% url 'inventory:add_model' %}">Add Model</a>
+
+{% endblock %}
