@@ -6,7 +6,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
 import json
 from django.shortcuts import get_object_or_404
-from .forms import MotorHomeForm
+from .forms import MotorHomeForm, CreateMotorHomeForm, AddMakeForm, AddModelForm
 
 
 @require_http_methods(['GET'])
@@ -21,24 +21,59 @@ def get_inventory(request):
         return render(request, 'inventory/list.html', context)
 
 @ensure_csrf_cookie
-@require_http_methods(['POST'])
+@require_http_methods(['GET','POST'])
 def post_inventory(request):
-    if request.method == 'POST':
-        try:
-            content = json.loads(request.body)
-            model = get_object_or_404(Model, id=content['model_id'])
-            motor_home = MotorHome.objects.create(
-                vin=content['vin'],
-                year=content['year'],
-                mileage=content['mileage'],
-                condition=content['condition'],
-                model_id=model,
-                color=content['color'],
-            )
-            return JsonResponse({'message': 'Created successfully'}, status=201)
-        except Exception as e:
-            return JsonResponse({'message': str(e)}, status=400)
-
+    if request.method == 'GET':
+        form = CreateMotorHomeForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'inventory/create.html', context)
+    elif request.method == 'POST':
+        form = CreateMotorHomeForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory:get_inventory')
+        context = {
+            'form': form
+        }
+        return render(request, 'inventory/create.html', context)
+    
+@require_http_methods(['GET', 'POST'])
+def add_make(request):
+    if request.method == 'GET':
+        form = AddMakeForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'inventory/add_make.html', context)
+    elif request.method == 'POST':
+        form = AddMakeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory:get_inventory')
+        context = {
+            'form': form
+        }
+        return render(request, 'inventory/add_make.html', context)
+    
+@require_http_methods(['GET', 'POST'])
+def add_model(request):
+    if request.method == 'GET':
+        form = AddModelForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'inventory/add_model.html', context) 
+    elif request.method == 'POST':
+        form = AddModelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory:get_inventory')
+        context = {
+            'form': form
+        }
+        return render(request, 'inventory/add_model.html', context)
 @require_http_methods(['GET'])
 def get_motor_home_details(request, id):
     if request.method == 'GET':
