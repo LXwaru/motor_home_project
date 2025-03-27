@@ -2,6 +2,8 @@
 
 {% block content %}
     <h1>Create Service Ticket</h1>
+    <h3>{{ motor_home.year }}, {{ motor_home.model_id.make_id.name }} {{ motor_home.model_id.name }}</h3>
+    <h3>VIN: {{ motor_home.vin }}</h3>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

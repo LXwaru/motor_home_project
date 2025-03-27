@@ -1,17 +1,30 @@
 from django.contrib import admin
-from .models import ServicePerson, ServiceTicket    
+from .models import ServiceTicket, ServicePerson, ServiceItem
 
-# Register your models here.
-@admin.register(ServicePerson)
-class ServicePersonAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'phone')
-    search_fields = ('first_name', 'last_name', 'email', 'phone')
-    list_filter = ('first_name', 'last_name', 'email', 'phone')
-    
-    
+class ServiceItemInline(admin.TabularInline):
+    model = ServiceItem
+    extra = 1
 
-@admin.register(ServiceTicket)
 class ServiceTicketAdmin(admin.ModelAdmin):
-    list_display = ('motor_home', 'service_person', 'service_start_date', 'service_end_date', 'service_description', 'service_price', 'is_completed', 'is_paid', 'is_warranty')
-    search_fields = ('motor_home', 'service_person', 'service_start_date', 'service_end_date', 'service_description', 'service_price', 'is_completed', 'is_paid', 'is_warranty')
-    list_filter = ('motor_home', 'service_person', 'service_start_date', 'service_end_date', 'service_description', 'service_price', 'is_completed', 'is_paid', 'is_warranty')
+    list_display = [
+        'id', 
+        'motor_home', 
+        'service_person', 
+        'service_start_date',
+        'service_price',
+        'is_completed',
+        'is_paid',
+        'is_warranty'
+    ]
+    list_filter = [
+        'service_person',
+        'service_start_date',
+        'is_completed',
+        'is_paid',
+        'is_warranty'
+    ]
+    inlines = [ServiceItemInline]
+
+admin.site.register(ServiceTicket, ServiceTicketAdmin)
+admin.site.register(ServicePerson)
+admin.site.register(ServiceItem)

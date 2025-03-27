@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Open Service Tickets</h1>
+    {% for ticket in service_tickets %}
+        <div class="service-ticket">
+            <div class="service-ticket-header">
+                <h2>{{ ticket.motor_home.model_id.make_id.name }}
+                    {{ ticket.motor_home.model_id.name }} {{ ticket.motor_home.year }}</h2>
+                <h3><strong>VIN:</strong> {{ ticket.motor_home.vin }}</h3>
+                <a href="{% url 'service:edit_service_ticket' ticket.id %}">Edit Ticket</a>
+                <p>
+                    <strong>Service Person:</strong> {{ ticket.service_person.first_name }} {{ ticket.service_person.last_name }}
+                </p>
+                <table class="service-items-table">
+                    <thead>
+                        <tr>
+                            <th>Service Items</th>
+                            <th>Price</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in ticket.items.all %}
+                            <tr>    
+                                <td>{{ item.item_description }}</td>
+                                <td>${{ item.item_price }}</td>
+                                <td>
+                                    <form action="{% url 'service:remove_service_item' item.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="item_id" value="{{ item.id }}">
+                                        <button type="submit" onclick="return confirm('Are you sure you want to remove this item?')">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{% url 'service:add_service_item' ticket.id %}">Add Service Item</a>
+                <p>
+                    <strong>Intake Date:</strong> {{ ticket.service_start_date }}
+                </p>
+                <p>
+                    <strong>Subtotal:</strong> ${{ ticket.subtotal }}
+                </p>
+                {% if ticket.is_warranty %} 
+                    <p>
+                        <strong>Warranty:</strong> Yes
+                    </p>
+                {% else %}
+                    <p>
+                        <strong>Warranty:</strong> No
+                    </p>
+                {% endif %}
+                <p>
+                    <strong>Service Ticket ID:</strong> {{ ticket.id }}
+                </p>
+                <button class="close-ticket-button" onclick="window.location.href='{% url 'service:close_service_ticket' ticket.id %}'">Close Ticket</button>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Service History</h1>
+    {% for ticket in service_history %}
+        <div class="service-ticket">
+            <h2>{{ ticket.motor_home.year }} {{ ticket.motor_home.model_id.make_id.name }} {{ ticket.motor_home.model_id.name }}</h2>
+            <p><strong>Service Person:</strong> {{ ticket.service_person.first_name }} {{ ticket.service_person.last_name }}</p>
+            <p><strong>Service Description:</strong> {{ ticket.service_description }}</p>
+            <p><strong>Service Price:</strong> {{ ticket.service_price }}</p>
+            <p><strong>Date Range of Service:</strong> {{ ticket.service_start_date }} - {{ ticket.service_end_date }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

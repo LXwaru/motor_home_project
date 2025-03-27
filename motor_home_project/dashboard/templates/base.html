@@ -7,15 +7,22 @@
     <title>Motor Home</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gidole&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gidole&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav class="nav-flex">
             <a href="/" class="moto-nav-item">Home</a>
             <a href="/inventory/" class="moto-nav-item">Inventory</a>
-            <a href="/service/" class="moto-nav-item">Service</a>
+            <div class="dropdown">
+                <a href="/service/" class="moto-nav-item dropbtn">Service</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'service:service_waiting_list' %}">Vehicle Waiting List</a>
+                    <a href="{% url 'service:open_service_ticket_list' %}">Open Ticket List</a>
+                    <a href="{% url 'service:list_service_history' %}">Service History</a>
+                </div>
+            </div>
             <a href="/sales/" class="moto-nav-item">Sales</a>
         </nav>
     </header>

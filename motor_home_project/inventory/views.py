@@ -51,7 +51,7 @@ def add_make(request):
         form = AddMakeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('inventory:get_inventory')
+            return redirect('inventory:post_inventory')
         context = {
             'form': form
         }
@@ -69,7 +69,7 @@ def add_model(request):
         form = AddModelForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('inventory:get_inventory')
+            return redirect('inventory:post_inventory')
         context = {
             'form': form
         }
