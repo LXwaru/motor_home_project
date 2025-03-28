@@ -109,15 +109,21 @@ def update_motor_home(request, id):
             return render(request, 'inventory/update.html', context)
 
 @ensure_csrf_cookie
-@require_http_methods(['DELETE'])
+@require_http_methods(['GET', 'POST'])
 def delete_motor_home(request, id):
-    if request.method == 'DELETE':
+    if request.method == 'GET':
+        motor_home = get_object_or_404(MotorHome, id=id)
+        context = {
+            'motor_home': motor_home
+        }
+        return render(request, 'inventory/delete.html', context)
+    elif request.method == 'POST':
         try:
             motor_home = get_object_or_404(MotorHome, id=id)
             if motor_home is None:
                 return JsonResponse({'message': 'Motor home not found'}, status=404)
             motor_home.delete()
-            return JsonResponse({'message': 'Deleted successfully'}, status=200)
+            return redirect('inventory:get_inventory')
         except Exception as e:
             return JsonResponse({'message': str(e)}, status=400)
 

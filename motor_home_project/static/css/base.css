@@ -88,7 +88,7 @@ td {
     display: inline-block;
 }
 
-.service-ticket {
+.service-ticket, .sale-ticket, .motor-home-details, form {
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -97,6 +97,7 @@ td {
     margin-bottom: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    justify-content: space-between;
 }
 
 .service-items-table {
@@ -110,4 +111,30 @@ td {
 .service-items-table td {
     padding: 8px;
     text-align: left;
+}
+
+.sales-flex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sort-controls {
+    margin: 20px 0;
+}
+
+.sort-controls select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.form-inline {
+    display: flex;
+    align-items: center;
+}
+
+.mr-2 {
+    margin-right: 10px;
 }
