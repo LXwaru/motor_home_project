@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Motor Homes For Sale</h1>
+    
+    <div class="sort-controls mb-4">
+        <form method="get" class="form-inline">
+            <label for="sort" class="mr-2">Sort by:</label>
+            <select name="sort" id="sort" class="form-control mr-2" onchange="this.form.submit()">
+                <option value="">Default</option>
+                <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Price (Low to High)</option>
+                <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Price (High to Low)</option>
+                <option value="year_asc" {% if request.GET.sort == 'year_asc' %}selected{% endif %}>Year (Oldest First)</option>
+                <option value="year_desc" {% if request.GET.sort == 'year_desc' %}selected{% endif %}>Year (Newest First)</option>
+            </select>
+        </form>
+    </div>
+
+    <div class="sales-flex">
+        {% for motor_home in motor_homes %}
+        <div class="sale-ticket" style="height: 550px;">
+            <h2>{{ motor_home.model_id.make_id.name }} {{ motor_home.model_id.name }}</h2>
+            <p><strong>Year:</strong> {{ motor_home.year }}</p>
+            <p><strong>Color:</strong> {{ motor_home.color }}</p>
+            <p><strong>Price:</strong> ${{ motor_home.ticket_price }}</p>
+            <p><strong>Condition:</strong> {{ motor_home.condition }}</p>
+            <button class="btn btn-primary">Schedule a Viewing</button>
+            <img src="{{ motor_home.image.url }}" alt="{{ motor_home.model_id.make_id.name }} {{ motor_home.model_id.name }}" style="max-width: 300px; height: auto;">
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
