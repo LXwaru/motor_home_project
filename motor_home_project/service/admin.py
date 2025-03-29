@@ -9,7 +9,7 @@ class ServiceTicketAdmin(admin.ModelAdmin):
     list_display = [
         'id', 
         'motor_home', 
-        'service_person', 
+        'service_provider', 
         'service_start_date',
         'service_price',
         'is_completed',
@@ -17,7 +17,7 @@ class ServiceTicketAdmin(admin.ModelAdmin):
         'is_warranty'
     ]
     list_filter = [
-        'service_person',
+        'service_provider',
         'service_start_date',
         'is_completed',
         'is_paid',
@@ -26,5 +26,4 @@ class ServiceTicketAdmin(admin.ModelAdmin):
     inlines = [ServiceItemInline]
 
 admin.site.register(ServiceTicket, ServiceTicketAdmin)
-admin.site.register(ServicePerson)
 admin.site.register(ServiceItem)

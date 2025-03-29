@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="profile-container">
+    <h1>{{ employee.full_name }}</h1>
+    <h2>Contact Information</h2>
+    <div class="profile-container-info">
+        <h3>Email:</h3>
+        <a href="mailto:{{ employee.email }}">{{ employee.email }}</a>
+        <h3>MobilePhone:</h3>
+        <a href="tel:{{ employee.phone_number }}">{{ employee.phone_number }}</a>
+        <h3>Home Address:</h3>
+        <p>{{ employee.address }}</p>
+        <p>{{ employee.city }}, {{ employee.state }} {{ employee.zip_code }}</p>
+    </div>
+    <div class="profile-container-info">
+    <h2>Roles/Permissions</h2>
+    {% if employee.is_service_admin %}
+        <p>Service Admin</p>
+    {% endif %}
+    {% if employee.is_service_provider %}
+        <p>Service Provider</p>
+    {% endif %}
+    {% if employee.is_sales_person %}
+        <p>Sales Person</p>
+    {% endif %}
+    {% if employee.is_sales_admin %}
+        <p>Sales Admin</p>
+    {% endif %}
+    </div>
+    <div class="profile-container-info">
+    <h2>Employment Status</h2>
+    {% if employee.is_active %}
+        <h3>Active - 
+            <form method="post" action="{% url 'accounts:deactivate_employee' employee.id %}">
+                {% csrf_token %}
+                <button type="submit" class="link-button">Deactivate</button>
+            </form>
+        </h3>
+    {% else %}
+        <h3>Inactive - <form method="post" action="{% url 'accounts:activate_employee' employee.id %}">
+                {% csrf_token %}
+                <button type="submit" class="link-button">Activate</button>
+            </form>
+        </h3>
+    {% endif %}
+</div>
+<div class="profile-footer">
+        <a href="{% url 'accounts:update_employee' employee.id %}">Update</a>
+        <a href="{% url 'accounts:list_employees' %}">Back to List</a>
+    </div>
+{% endblock %}

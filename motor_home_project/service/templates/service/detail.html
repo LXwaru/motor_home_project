@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="moto-container">
     <h1>Service Ticket</h1>
     <p>{{ motor_home.year }} - {{ motor_home.model_id.make_id.name }} {{ motor_home.model_id.name }}, {{ motor_home.color }}</p>
     <p>Service Date: {{ service_ticket.service_date }}</p>
@@ -14,5 +15,6 @@
         {{ form.as_p }}
         <button type="submit">Update</button>
     </form>
+    </div>
 {% endblock %}
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import ServiceTicket, ServicePerson, ServiceItem
+from .models import ServiceTicket, ServiceItem
 
 class CreateServiceTicketForm(forms.ModelForm):
     service_start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
@@ -15,7 +15,7 @@ class CreateServiceTicketForm(forms.ModelForm):
         model = ServiceTicket
         fields = [
             'motor_home_id', 
-            'service_person', 
+            'service_provider', 
             'service_start_date', 
         ]
     
@@ -23,8 +23,7 @@ class EditServiceTicketForm(forms.ModelForm):
     class Meta:
         model = ServiceTicket
         fields = [
-            'service_person', 
-            'service_price'
+            'service_provider'
         ]
 
 class AddServiceItemForm(forms.ModelForm):

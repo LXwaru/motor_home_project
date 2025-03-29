@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="moto-container">
     <h1>Service List</h1>
+    {% if vehicle_waiting_list|length == 0 %}
+        <p>No vehicles are waiting for service.</p>
+    {% else %}
     <table>
         <thead>
             <tr>
@@ -26,7 +30,9 @@
                     </td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    {% endif %}
+    </div>
 {% endblock %}
 

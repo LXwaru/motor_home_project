@@ -1,5 +1,6 @@
 from django.db import models
 from inventory.models import MotorHome
+
 # Create your models here.
 class ServicePerson(models.Model):
     id = models.AutoField(primary_key=True)
@@ -14,7 +15,14 @@ class ServicePerson(models.Model):
 class ServiceTicket(models.Model):
     id = models.AutoField(primary_key=True)
     motor_home = models.ForeignKey(MotorHome, on_delete=models.CASCADE)
-    service_person = models.ForeignKey(ServicePerson, on_delete=models.CASCADE)
+    service_provider = models.ForeignKey(
+        'accounts.Employee', 
+        on_delete=models.CASCADE, 
+        limit_choices_to={'is_service_provider': True},
+        related_name='service_tickets',
+        null=True,
+        blank=True
+    )
     service_start_date = models.DateField()
     service_end_date = models.DateField(null=True, blank=True, default=None)
     service_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)

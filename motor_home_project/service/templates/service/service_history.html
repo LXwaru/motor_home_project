@@ -1,14 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Service History</h1>
-    {% for ticket in service_history %}
+<h1>Service History</h1>
+{% for ticket in service_history %}
+<div class="moto-container">
         <div class="service-ticket">
-            <h2>{{ ticket.motor_home.year }} {{ ticket.motor_home.model_id.make_id.name }} {{ ticket.motor_home.model_id.name }}</h2>
-            <p><strong>Service Person:</strong> {{ ticket.service_person.first_name }} {{ ticket.service_person.last_name }}</p>
-            <p><strong>Service Description:</strong> {{ ticket.service_description }}</p>
-            <p><strong>Service Price:</strong> {{ ticket.service_price }}</p>
+            <h2>{{ ticket.motor_home.year }} {{ ticket.motor_home.model_id.make_id.name }} {{ ticket.motor_home.model_id.name }} ({{ ticket.motor_home.color }})</h2>
+            <p>VIN:{{ ticket.motor_home.vin }}</p>
+            <p><strong>Service Provider:</strong> {{ ticket.service_provider.full_name }}</p>
+            <div class="service-items">
+                <div class="service-flex-item">
+                    <p><strong>Service Items</strong></p>
+                    <p><strong>Itemized Prices</strong></p>
+                </div>
+                {% for item in service_items %}
+                <div class="service-flex-item">
+                    <p style="max-width: 200px;">{{ item.item_description }}</p>
+                    <p>${{ item.item_price }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            <p><strong>Total Service Price:</strong> ${{ ticket.service_price }}</p>
             <p><strong>Date Range of Service:</strong> {{ ticket.service_start_date }} - {{ ticket.service_end_date }}</p>
         </div>
+        <p style="text-align: right;">Service Ticket ID: {{ ticket.id }}</p>
+    </div>
     {% endfor %}
 {% endblock %}

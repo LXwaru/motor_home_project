@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="moto-container">
     <h1>Open Service Tickets</h1>
     {% for ticket in service_tickets %}
         <div class="service-ticket">
@@ -8,9 +9,9 @@
                 <h2>{{ ticket.motor_home.model_id.make_id.name }}
                     {{ ticket.motor_home.model_id.name }} {{ ticket.motor_home.year }}</h2>
                 <h3><strong>VIN:</strong> {{ ticket.motor_home.vin }}</h3>
-                <a href="{% url 'service:edit_service_ticket' ticket.id %}">Edit Ticket</a>
                 <p>
-                    <strong>Service Person:</strong> {{ ticket.service_person.first_name }} {{ ticket.service_person.last_name }}
+                    <strong>Service Provider:</strong> {{ ticket.service_provider.full_name }} -
+                    <a href="{% url 'service:edit_service_ticket' ticket.id %}">Change</a>
                 </p>
                 <table class="service-items-table">
                     <thead>
@@ -41,7 +42,7 @@
                     <strong>Intake Date:</strong> {{ ticket.service_start_date }}
                 </p>
                 <p>
-                    <strong>Subtotal:</strong> ${{ ticket.subtotal }}
+                    <strong>Subtotal:</strong> ${{ ticket.service_price }}
                 </p>
                 {% if ticket.is_warranty %} 
                     <p>
@@ -59,4 +60,5 @@
             </div>
         </div>
     {% endfor %}
+    </div>
 {% endblock %}

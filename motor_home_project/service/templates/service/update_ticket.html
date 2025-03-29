@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
-{% block content %}
-    <h1>Update Service Ticket</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update Ticket</button>
-    </form>
+{% block content %} 
+    <div class="moto-container">
+        <h1>Update Service Ticket</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Update Ticket</button>
+        </form>
+    </div>
 {% endblock %}

@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Add Make</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Make</button>
-    </form>
+    <div class="moto-container">
+        <h1>Add Make</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Make</button>
+        </form>
+    </div>
 {% endblock %}

@@ -77,8 +77,10 @@ def edit_service_ticket(request, ticket_id):
 @require_http_methods(['GET'])
 def list_service_history(request):
     service_history = ServiceTicket.objects.filter(is_completed=True)
+    service_items = ServiceItem.objects.filter(service_ticket__in=service_history)
     context = {
         'service_history': service_history,
+        'service_items': service_items,
     }
     return render(request, 'service/service_history.html', context)
 
@@ -93,7 +95,7 @@ def add_service_item(request, ticket_id):
         if form.is_valid():
             form.save()
             ticket = get_object_or_404(ServiceTicket, id=ticket_id)
-            ticket.subtotal = sum(item.item_price for item in ticket.items.all())
+            ticket.service_price = sum(item.item_price for item in ticket.items.all())
             ticket.save()
             return redirect('service:open_service_ticket_list')
         else:
@@ -106,6 +108,6 @@ def remove_service_item(request, item_id):
     ticket = item.service_ticket
     item.delete()
     # Update the ticket subtotal after removing the item
-    ticket.subtotal = sum(item.item_price for item in ticket.items.all())
+    ticket.service_price = sum(item.item_price for item in ticket.items.all())
     ticket.save()
     return redirect('service:open_service_ticket_list')
