@@ -35,6 +35,9 @@ class MotorHome(models.Model):
     for_sale = models.BooleanField(default=True)
     for_service = models.BooleanField(default=False)
     for_rental = models.BooleanField(default=False)
+    is_rented = models.BooleanField(default=False)
+    rental_return_date = models.DateField(blank=True, null=True, default=None)
+    rental_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=None)
     is_sold = models.BooleanField(default=False)
     sold_date = models.DateField(blank=True, null=True, default=None)
     owner = models.ForeignKey(

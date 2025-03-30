@@ -14,8 +14,14 @@ def get_inventory(request):
     if request.method == 'GET':
         csrf_token = get_token(request)
         motor_homes = MotorHome.objects.select_related('model_id', 'model_id__make_id').all()
+        motor_homes_for_sale = MotorHome.objects.filter(for_sale=True)
+        motor_homes_for_service = MotorHome.objects.filter(for_service=True)
+        motor_homes_for_rental = MotorHome.objects.filter(for_rental=True)
         context = {
-            'motor_homes': motor_homes
+            'motor_homes': motor_homes,
+            'motor_homes_for_sale': motor_homes_for_sale,
+            'motor_homes_for_service': motor_homes_for_service,
+            'motor_homes_for_rental': motor_homes_for_rental
         }
         
         return render(request, 'inventory/list.html', context)
