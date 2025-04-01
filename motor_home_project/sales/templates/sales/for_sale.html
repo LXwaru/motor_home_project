@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Motor Homes For Sale</h1>
-    
+    <h1>Motor Homes For Sale</h1>    
     <div class="sort-controls mb-4">
         <form method="get" class="form-inline">
             <label for="sort" class="mr-2">Sort by:</label>
@@ -15,18 +14,35 @@
             </select>
         </form>
     </div>
-
-    <div class="sales-flex">
-        {% for motor_home in motor_homes %}
-        <div class="sale-ticket" style="height: 550px;">
-            <h2>{{ motor_home.model_id.make_id.name }} {{ motor_home.model_id.name }}</h2>
-            <p><strong>Year:</strong> {{ motor_home.year }}</p>
-            <p><strong>Color:</strong> {{ motor_home.color }}</p>
-            <p><strong>Price:</strong> ${{ motor_home.ticket_price }}</p>
-            <p><strong>Condition:</strong> {{ motor_home.condition }}</p>
-            <button class="btn btn-primary">Schedule a Viewing</button>
-            <img src="{{ motor_home.image.url }}" alt="{{ motor_home.model_id.make_id.name }} {{ motor_home.model_id.name }}" style="max-width: 300px; height: auto;">
-        </div>
-        {% endfor %}
+    {% for motor_home in motor_homes %}
+    <div class="sale-ticket" style="width: 75%;">
+        <table>
+            <tr>
+                <td>
+                    <div class="sales-flex">
+                        <h2>{{ motor_home.model_id.make_id.name }} {{ motor_home.model_id.name }}</h2>
+                        <p><strong>Year:</strong> {{ motor_home.year }}</p>
+                        <p><strong>Color:</strong> {{ motor_home.color }}</p>
+                        <p><strong>Sale Price:</strong> ${{ motor_home.ticket_price }}</p>
+                        <p><strong>Condition:</strong> {{ motor_home.condition }}</p>
+                    </div>
+                </td>
+                <td>
+                    <img src="{{ motor_home.image.url }}" alt="{{ motor_home.model_id.make_id.name }} {{ motor_home.model_id.name }}" style="max-width: 300px; height: auto;">
+                    {% if motor_home.for_rental and not motor_home.is_rented %}
+                        <a class="rental-quote-container" href="#">
+                        <p><i>click to rent</i></p>
+                        <p><strong>Rental Price:</strong> ${{ motor_home.rental_price }}/day</p>
+                        </a>
+                    {% endif %}
+                    {% if motor_home.for_rental and motor_home.is_rented %}
+                        <div class="rental-unavailable-container">
+                            <p><i>not available for rent until {{ motor_home.rental_return_date }}</i></p>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
     </div>
+    {% endfor %}
 {% endblock %}

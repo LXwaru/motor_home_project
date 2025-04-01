@@ -13,9 +13,12 @@ class Employee(AbstractUser):
     state = models.CharField(max_length=255, null=False, blank=False)
     zip_code = models.CharField(max_length=255, null=False, blank=False)
     is_service_provider = models.BooleanField(default=False)
-    is_sales_person = models.BooleanField(default=False)
     is_service_admin = models.BooleanField(default=False)
+    is_service_manager = models.BooleanField(default=False)
+    is_sales_person = models.BooleanField(default=False)
     is_sales_admin = models.BooleanField(default=False)
+    is_sales_manager = models.BooleanField(default=False)
+    is_director = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     
     # Add related_name attributes to resolve the clash

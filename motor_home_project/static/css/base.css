@@ -22,15 +22,16 @@ body {
     align-items: center;
     position: relative;
     padding: 50px;
-    background: radial-gradient(circle, rgba(254, 253, 232, 0.95) 0%, rgba(255, 255, 255, 0) 60%);
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
-.nav-flex {
+/* .nav-flex {
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
     transition: color 0.3s ease;
-}
+} */
 
 .moto-nav-item {
     padding: 10px;
@@ -167,9 +168,10 @@ td {
 
 .sales-flex{
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: left;
 }
 
 .sort-controls {
@@ -206,4 +208,60 @@ td {
 
 .link-button:hover {
     color: darkblue;
+}
+
+.rental-quote-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: #8ddf8aef;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.rental-quote-container p {
+    text-decoration: none;
+    margin: 2px;
+}
+
+.rental-quote-container:hover {
+    background-color: #63df99;
+    box-shadow:hsl(from color h s l);
+    cursor: pointer;
+}
+
+.rental-unavailable-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: #a42929;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+}
+.sale-ticket {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
 }
